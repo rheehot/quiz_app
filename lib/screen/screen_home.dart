@@ -1,9 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:quiz_app_test/model/model_quiz.dart';
-import 'package:quiz_app_test/screen/screen_quiz.dart';
 import 'package:http/http.dart' as http;
 import 'package:quiz_app_test/model/api_adapter.dart';
-import 'dart:convert';
+import 'package:quiz_app_test/model/model_quiz.dart';
+import 'package:quiz_app_test/screen/screen_quiz.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -11,25 +12,29 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+//   1. 앱이 실행 되었을 떄 퀴즈를 가져오는 방식이 있고
+// 2. 퀴즈 풀기 버튼을 눌렀을때 가져오는 방식이 있습니다.
+
+// 이번에는 퀴즈 풀기 버튼을 눌렀을때 랜덤한 퀴즈를 가져오는 방식으로 !
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   List<Quiz> quizs = [];
   bool isLoading = false;
 
-  _fetchQuizs() async {
-    setState(() {
-      isLoading = true;
-    });
-    final response =
-        await http.get('https://drf-quiz-test.herokuapp.com/quiz/3/');
-    if (response.statusCode == 200) {
-      setState(() {
-        quizs = parseQuizs(utf8.decode(response.bodyBytes));
-        isLoading = false;
-      });
-    } else {
-      throw Exception('failed to load data');
-    }
-  }
+  // _fetchQuizs() async {
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //   final response =
+  //       await http.get('https://drf-quiz-test.herokuapp.com/quiz/3/');
+  //   if (response.statusCode == 200) {
+  //     setState(() {
+  //       quizs = parseQuizs(utf8.decode(response.bodyBytes));
+  //       isLoading = false;
+  //     });
+  //   } else {
+  //     throw Exception('failed to load data');
+  //   }
+  // }
 
   // List<Quiz> quizs = [
   //   Quiz.fromMap({
@@ -51,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
+    // 절대수치 사용 안하고 상대수치
     double width = screenSize.width;
     double height = screenSize.height;
 
@@ -113,6 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       color: Colors.deepPurple,
                       onPressed: () {
+                        //Navigator.push(context, MetrialPageRoute(builder: (context) => QuizScreen());
                         _scaffoldKey.currentState.showSnackBar(
                           SnackBar(
                             content: Row(
@@ -126,16 +133,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         );
-                        _fetchQuizs().whenComplete(() {
-                          return Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => QuizScreen(
-                                quizs: quizs,
-                              ),
-                            ),
-                          );
-                        });
+                        // _fetchQuizs().whenComplete(() {
+                        //   return Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //       builder: (context) => QuizScreen(
+                        //         quizs: quizs,
+                        //       ),
+                        //     ),
+                        //   );
+                        // });
                       },
                     ),
                   ),

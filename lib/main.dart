@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app_test/screen/screen_home.dart';
+
+import 'screen/screen_home.dart';
 
 void main() => runApp(MyApp());
 

@@ -6,14 +6,16 @@ import 'package:quiz_app_test/screen/screen_result.dart';
 import 'package:quiz_app_test/widget/widget_candidate.dart';
 
 class QuizScreen extends StatefulWidget {
-  List<Quiz> quizs;
+  List<Quiz> quizs; //받아온다.
   QuizScreen({this.quizs});
   @override
   _QuizScreenState createState() => _QuizScreenState();
 }
 
 class _QuizScreenState extends State<QuizScreen> {
+  //퀴즈별 값을 답
   List<int> _answers = [-1, -1, -1];
+  //보기가 4개별로 주어질텐데 눌렸는지 안눌렸는지 알려주는 리스트
   List<bool> _answerState = [false, false, false, false];
   int _currentIndex = 0;
   SwiperController _controller = SwiperController();
@@ -36,7 +38,8 @@ class _QuizScreenState extends State<QuizScreen> {
             height: height * 0.5,
             child: Swiper(
               controller: _controller,
-              physics: NeverScrollableScrollPhysics(),
+              physics:
+                  NeverScrollableScrollPhysics(), //강제로 스와이프 모션을 통해 넘어갈수 없다.
               loop: false,
               itemCount: widget.quizs.length,
               itemBuilder: (BuildContext context, int index) {
